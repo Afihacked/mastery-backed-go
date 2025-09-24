@@ -8,7 +8,7 @@ import (
 func main() {
 	app := fiber.New()
 // Debug endpoint buat cek yt-dlp
-    app.Get("/debug/yt", func(c *fiber.Ctx) error {
+    app.Get("/debug/yt_helper", func(c *fiber.Ctx) error {
         path, err := exec.LookPath("yt-dlp")
         if err != nil {
             return c.JSON(fiber.Map{"error": "yt-dlp not found"})
