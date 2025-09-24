@@ -1,10 +1,10 @@
 FROM golang:1.25-bullseye
 
 # Install dependencies (yt-dlp + ffmpeg)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3 python3-pip ffmpeg ca-certificates \
-    && pip3 install --no-cache-dir -U yt-dlp \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y python3 python3-pip ffmpeg \
+    && pip3 install -U yt-dlp \
+    && ln -s /usr/local/bin/yt-dlp /usr/bin/yt-dlp
+
 
 # Set working directory
 WORKDIR /app
