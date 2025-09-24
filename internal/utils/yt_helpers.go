@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"os/exec"
 )
@@ -39,13 +40,21 @@ func ExtractInfo(url string, format string, cookies string) (map[string]interfac
 
 	if cookies != "" {
 		tmpFile := "/tmp/cookies.txt"
-		os.WriteFile(tmpFile, []byte(cookies), 0644)
+		_ = os.WriteFile(tmpFile, []byte(cookies), 0644)
 		args = append(args, "--cookies", tmpFile)
 	}
 
 	args = append(args, url)
 
-	cmd := exec.Command("/usr/local/bin/yt-dlp", args...)
+	// 🔍 cek lokasi yt-dlp di container
+	path, err := exec.LookPath("yt-dlp")
+	if err != nil {
+		return map[string]interface{}{"success": false, "error": "yt-dlp not found in PATH"}, err
+	}
+	fmt.Println("yt-dlp path:", path)
+
+	// 🔧 jalankan command
+	cmd := exec.Command(path, args...)
 	out, err := cmd.Output()
 	if err != nil {
 		return map[string]interface{}{"success": false, "error": err.Error()}, err
