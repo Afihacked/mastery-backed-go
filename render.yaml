@@ -6,4 +6,4 @@ services:
     autoDeploy: true
     envVars:
       - key: YT_COOKIES
-        sync: false # isi manual di dashboard Render
+        sync: false
