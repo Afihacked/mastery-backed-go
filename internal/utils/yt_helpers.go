@@ -45,7 +45,7 @@ func ExtractInfo(url string, format string, cookies string) (map[string]interfac
 
 	args = append(args, url)
 
-	cmd := exec.Command("yt-dlp", "-j", url)
+	cmd := exec.Command("/usr/local/bin/yt-dlp", args...)
 	out, err := cmd.Output()
 	if err != nil {
 		return map[string]interface{}{"success": false, "error": err.Error()}, err
